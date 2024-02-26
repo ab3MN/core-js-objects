@@ -256,8 +256,20 @@ function sortCitiesArray(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const newGroup = array.reduce((acc, item) => {
+    const objGroup = { ...acc };
+    const key = keySelector(item);
+
+    const value = valueSelector(item);
+    if (key in objGroup) {
+      objGroup[key].push(value);
+      return objGroup;
+    }
+    objGroup[key] = [value];
+    return objGroup;
+  }, {});
+  return new Map(Object.entries(newGroup));
 }
 
 /**
